@@ -10,4 +10,5 @@ class TestGildedRose():
         gilded_rose.update_quality()
         assert "foo" == items[0].name
 
+    def test_
 
