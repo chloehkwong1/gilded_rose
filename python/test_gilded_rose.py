@@ -39,6 +39,12 @@ def test_quality_degrades_twice_as_fast_two_days_after_sellin_date(name, sell_in
     gilded_rose.update_quality()
     assert items[0].quality == expected_value
 
+def test_quality_is_never_negative():
+    items = [Item("testitem1", -1, 0)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality >= 0
+
 
 
 
