@@ -59,7 +59,7 @@ def test_quality_is_never_negative():
     assert items[0].quality >= 0
 
 
-def test_brie_quality_increases_daily_before_sellin():
+def test_brie_and_BP_passes_quality_increases_daily_before_sellin():
     items = [Item("Aged Brie", 10, 20)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
@@ -94,4 +94,15 @@ def test_sulfuras_sellin_constant():
     gilded_rose.update_quality()
     assert items[0].sell_in == 20
 
-def test_b
+# Is it okay to combine all the backstage pass qualities into one test?
+@pytest.mark.parametrize("name, sell_in, quality, expected_value",
+                         [
+                             ("Backstage passes to a TAFKAL80ETC concert", 10, 10, 12),
+                             ("Backstage passes to a TAFKAL80ETC concert", 5, 10, 13),
+                             ("Backstage passes to a TAFKAL80ETC concert", -1, 10, 0),
+                         ])
+def test_backstage_passes_quality(name, sell_in, quality, expected_value):
+    items = [Item(name, sell_in, quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality == expected_value
