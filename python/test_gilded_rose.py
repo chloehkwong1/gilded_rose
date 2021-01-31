@@ -2,25 +2,48 @@
 import pytest
 from gilded_rose import Item, GildedRose
 
-@pytest.mark.parametrize("name, sell_in, quality, expected_value",
- [
-    ("testitem1", -1, 20, 18),
-    ("testitem2", -1, 15, 13)
-])
 
+@pytest.mark.parametrize("name, sell_in, quality, expected_value",
+                         [
+                             ("testitem1", 10, 10, 9),
+                             ("testitem2", 5, 15, 14)
+                         ])
+def test_quality_normal_items_decrease_daily(name, sell_in, quality, expected_value):
+    items = [Item(name, sell_in, quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality == expected_value
+
+
+@pytest.mark.parametrize("name, sell_in, quality, expected_value",
+                         [
+                             ("testitem1", 10, 10, 9),
+                             ("testitem2", 5, 15, 4)
+                         ])
+def test_sellin_normal_items_decreases_daily(name, sell_in, quality, expected_value):
+    items = [Item(name, sell_in, quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].sell_in == expected_value
+
+
+@pytest.mark.parametrize("name, sell_in, quality, expected_value",
+                         [
+                             ("testitem1", -1, 20, 18),
+                             ("testitem2", -1, 15, 13)
+                         ])
 def test_quality_degrades_twice_as_fast_one_day_after_sellin_date(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
     assert items[0].quality == expected_value
 
+
 @pytest.mark.parametrize("name, sell_in, quality, expected_value",
- [
-    ("testitem1", -2, 20, 16),
-    ("testitem2", -2, 15, 11)
-])
-
-
+                         [
+                             ("testitem1", -2, 20, 16),
+                             ("testitem2", -2, 15, 11)
+                         ])
 def test_quality_degrades_twice_as_fast_two_days_after_sellin_date(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
@@ -28,12 +51,9 @@ def test_quality_degrades_twice_as_fast_two_days_after_sellin_date(name, sell_in
     gilded_rose.update_quality()
     assert items[0].quality == expected_value
 
+
 def test_quality_is_never_negative():
     items = [Item("testitem1", -1, 0)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
     assert items[0].quality >= 0
-
-
-
-
