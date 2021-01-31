@@ -48,7 +48,7 @@ class GildedRose(object):
                         item.quality = item.quality - item.quality
                 else:
                     if item.quality < 50:
-                        # For AB when quality is less than 50, quality increases by 1 each day after sellin date
+                        # For AB when quality is less than 50, quality increases by an extra 1 each day after sellin date
                         item.quality = item.quality + 1
 
 
