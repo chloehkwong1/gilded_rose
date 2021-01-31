@@ -57,3 +57,41 @@ def test_quality_is_never_negative():
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
     assert items[0].quality >= 0
+
+
+def test_brie_quality_increases_daily_before_sellin():
+    items = [Item("Aged Brie", 10, 20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality == 21
+
+
+def test_brie_quality_increases_double_after_sellin():
+    items = [Item("Aged Brie", -2, 15)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality == 17
+
+
+def test_quality_never_more_than_50():
+    items = [Item("Aged Brie", 20, 50)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality == 50
+
+
+# Should these next two sulfuras tests be in one test?
+def test_sulfuras_quality_constant():
+    items = [Item("Sulfuras, Hand of Ragnaros", 20, 20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].quality == 20
+
+
+def test_sulfuras_sellin_constant():
+    items = [Item("Sulfuras, Hand of Ragnaros", 20, 20)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+    assert items[0].sell_in == 20
+
+def test_b
