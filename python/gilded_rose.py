@@ -25,14 +25,12 @@ class GildedRose(object):
                                 # increases by 1
                                 item.quality = item.quality + 1
                         if item.sell_in < 6:
-                            # This if statement seems to be made redundant by the above if statement
+                            # Not redundant - used in BP passes case to add quality for 5 days or less case
                             if item.quality < 50:
                                 item.quality = item.quality + 1
 
             # Update SellIn
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                # For all items (except Sulfuras), SellIn decreases by 1 each day
-                item.sell_in = item.sell_in - 1
+            self.update_sellin(item)
 
             # Update Quality if out of date
             if item.sell_in < 0:
@@ -50,6 +48,11 @@ class GildedRose(object):
                     if item.quality < 50:
                         # For AB when quality is less than 50, quality increases by an extra 1 each day after sellin date
                         item.quality = item.quality + 1
+
+    def update_sellin(self, item):
+        if item.name != "Sulfuras, Hand of Ragnaros":
+            # For all items (except Sulfuras), SellIn decreases by 1 each day
+            item.sell_in = item.sell_in - 1
 
 
 class Item:
