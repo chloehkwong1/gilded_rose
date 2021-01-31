@@ -5,7 +5,7 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-    def update_quality(self):
+    def update_quality_before_sellin(self):
         # Update Quality (called whether in date or not)
         for item in self.items:
             if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
@@ -33,21 +33,24 @@ class GildedRose(object):
             self.update_sellin(item)
 
             # Update Quality if out of date
-            if item.sell_in < 0:
-                if item.name != "Aged Brie":
-                    if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                        if item.quality > 0:
-                            if item.name != "Sulfuras, Hand of Ragnaros":
-                                # Items not AB, BP, and Sulf: if quality > 0, quality decreases by an extra 1 each
-                                # day after sellin date ( in addition to -1 on line 16)
-                                item.quality = item.quality - 1
-                    else:
-                        # For BP, item quality is zero after sellin date
-                        item.quality = item.quality - item.quality
+            self.update_quality_after_sellin(item)
+
+    def update_quality_after_sellin(self, item):
+        if item.sell_in < 0:
+            if item.name != "Aged Brie":
+                if item.name != "Backstage passes to a TAFKAL80ETC concert":
+                    if item.quality > 0:
+                        if item.name != "Sulfuras, Hand of Ragnaros":
+                            # Items not AB, BP, and Sulf: if quality > 0, quality decreases by an extra 1 each
+                            # day after sellin date ( in addition to -1 on line 16)
+                            item.quality = item.quality - 1
                 else:
-                    if item.quality < 50:
-                        # For AB when quality is less than 50, quality increases by an extra 1 each day after sellin date
-                        item.quality = item.quality + 1
+                    # For BP, item quality is zero after sellin date
+                    item.quality = item.quality - item.quality
+            else:
+                if item.quality < 50:
+                    # For AB when quality is less than 50, quality increases by an extra 1 each day after sellin date
+                    item.quality = item.quality + 1
 
     def update_sellin(self, item):
         if item.name != "Sulfuras, Hand of Ragnaros":
