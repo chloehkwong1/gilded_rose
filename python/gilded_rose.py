@@ -8,26 +8,28 @@ class GildedRose(object):
     def update_quality_before_sellin(self):
         # Update Quality (called whether in date or not)
         for item in self.items:
-            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.quality > 0:
-                    if item.name != "Sulfuras, Hand of Ragnaros":
-                        # For normal items, system lowers the quality by 1 after each day
-                        # Sulfuras doesn't decrease in quality
-                        self.decrease_quality(item)
-            else:
-                if item.quality < 50:
+            if item.quality < 50:
+                if item.name == "Aged Brie":
                     # For Aged Brie & Backstage passes the quality increases by 1 each day
                     self.increase_quality(item)
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                # For Backstage passes, if SellIn less than 11 and Quality less than 50, quality
-                                # increases by 1
-                                self.increase_quality(item)
-                        if item.sell_in < 6:
-                            # Not redundant - used in BP passes case to add quality for 5 days or less case
-                            if item.quality < 50:
-                                self.increase_quality(item)
+                elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+                    self.increase_quality(item)
+                    if item.sell_in < 11:
+                        if item.quality < 50:
+                            # For Backstage passes, if SellIn less than 11 and Quality less than 50, quality
+                            # increases by 1
+                            self.increase_quality(item)
+                    if item.sell_in < 6:
+                        # Not redundant - used in BP passes case to add quality for 5 days or less case
+                        if item.quality < 50:
+                            self.increase_quality(item)
+                else:
+                    if item.quality > 0:
+                        if item.name != "Sulfuras, Hand of Ragnaros":
+                            # For normal items, system lowers the quality by 1 after each day
+                            # Sulfuras doesn't decrease in quality
+                            self.decrease_quality(item)
+
 
             # Update SellIn
             self.update_sellin(item)
