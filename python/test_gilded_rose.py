@@ -73,11 +73,16 @@ def test_brie_quality_increases_double_after_sellin():
     assert items[0].quality == 17
 
 
-def test_quality_never_more_than_50():
-    items = [Item("Aged Brie", 20, 50)]
+@pytest.mark.parametrize("name, sell_in, quality, expected_value",
+                         [
+                             ("Aged Brie", 20, 50, 50),
+                             ("Backstage passes to a TAFKAL80ETC concert", 1, 50, 50)
+                         ])
+def test_quality_never_more_than_50(name, sell_in, quality, expected_value):
+    items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality_before_sellin()
-    assert items[0].quality == 50
+    assert items[0].quality == expected_value
 
 
 # Should these next two sulfuras tests be in one test?
