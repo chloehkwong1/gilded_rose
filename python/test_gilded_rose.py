@@ -11,7 +11,7 @@ from gilded_rose import Item, GildedRose
 def test_quality_normal_items_decrease_daily(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == expected_value
 
 
@@ -23,7 +23,7 @@ def test_quality_normal_items_decrease_daily(name, sell_in, quality, expected_va
 def test_sellin_normal_items_decreases_daily(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].sell_in == expected_value
 
 
@@ -35,7 +35,7 @@ def test_sellin_normal_items_decreases_daily(name, sell_in, quality, expected_va
 def test_quality_degrades_twice_as_fast_one_day_after_sellin_date(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == expected_value
 
 
@@ -47,29 +47,29 @@ def test_quality_degrades_twice_as_fast_one_day_after_sellin_date(name, sell_in,
 def test_quality_degrades_twice_as_fast_two_days_after_sellin_date(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
+    gilded_rose.main()
     assert items[0].quality == expected_value
 
 
 def test_quality_is_never_negative():
     items = [Item("testitem1", -1, 0)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality >= 0
 
 
 def test_brie_and_BP_passes_quality_increases_daily_before_sellin():
     items = [Item("Aged Brie", 10, 20)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == 21
 
 
 def test_brie_quality_increases_double_after_sellin():
     items = [Item("Aged Brie", -2, 15)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == 17
 
 
@@ -81,7 +81,7 @@ def test_brie_quality_increases_double_after_sellin():
 def test_quality_never_more_than_50(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == expected_value
 
 
@@ -89,14 +89,14 @@ def test_quality_never_more_than_50(name, sell_in, quality, expected_value):
 def test_sulfuras_quality_constant():
     items = [Item("Sulfuras, Hand of Ragnaros", 20, 20)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == 20
 
 
 def test_sulfuras_sellin_constant():
     items = [Item("Sulfuras, Hand of Ragnaros", 20, 20)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].sell_in == 20
 
 # Is it okay to combine all the backstage pass qualities into one test?
@@ -109,5 +109,5 @@ def test_sulfuras_sellin_constant():
 def test_backstage_passes_quality(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
-    gilded_rose.update_quality_before_sellin()
+    gilded_rose.main()
     assert items[0].quality == expected_value
