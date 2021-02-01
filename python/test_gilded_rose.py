@@ -20,7 +20,7 @@ def test_quality_normal_items_decrease_daily(name, sell_in, quality, expected_va
                              ("testitem1", 10, 10, 9),
                              ("testitem2", 5, 15, 4)
                          ])
-def test_sellin_normal_items_decreases_daily(name, sell_in, quality, expected_value):
+def test_sellin_items_decreases_daily(name, sell_in, quality, expected_value):
     items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
     gilded_rose.main()
@@ -111,3 +111,9 @@ def test_backstage_passes_quality(name, sell_in, quality, expected_value):
     gilded_rose = GildedRose(items)
     gilded_rose.main()
     assert items[0].quality == expected_value
+
+def test_conjured_quality_decreases_by_two_daily_before_sellin():
+    items = [Item("Conjured", 20, 10)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.main()
+    assert items[0].quality == 8
