@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from update_quality import increase_quality, decrease_quality
+from update_quality_items import update_backstage_passes_quality, update_brie_quality, update_normal_quality
 
 
 class GildedRose(object):
@@ -14,41 +14,16 @@ class GildedRose(object):
 
                 self.update_sellin(item)
 
-                if item.sell_in < 0:
-                    self.update_quality_after_sellin(item)
 
     def update_quality_before_sellin(self, item):
             if item.name == "Aged Brie":
-                self.update_brie_quality(item)
+                update_brie_quality(item)
             elif item.name == "Backstage passes to a TAFKAL80ETC concert":
-                self.update_backstage_passes_quality(item)
+                update_backstage_passes_quality(item)
             elif item.name == "Sulfuras, Hand of Ragnaros":
                 pass
             else:
-                decrease_quality(item)
-
-    def update_backstage_passes_quality(self, item):
-        increase_quality(item)
-        if item.sell_in < 6:
-            increase_quality(item)
-            increase_quality(item)
-        else:
-            increase_quality(item)
-
-    def update_brie_quality(self, item):
-        increase_quality(item)
-
-    def update_quality_after_sellin(self, item):
-        if item.name == "Aged Brie":
-            self.update_brie_quality(item)
-        elif item.name == "Backstage passes to a TAFKAL80ETC concert":
-            item.quality = 0
-        elif item.name == "Sulfuras, Hand of Ragnaros":
-            pass
-        else:
-            decrease_quality(item)
-            
-            
+                update_normal_quality(item)
 
     def update_sellin(self, item):
         if item.name != "Sulfuras, Hand of Ragnaros":
