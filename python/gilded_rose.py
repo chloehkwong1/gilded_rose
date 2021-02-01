@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from update_quality_items import update_backstage_passes_quality, update_brie_quality, update_normal_quality
+from update_quality_items import update_backstage_passes_quality, update_brie_quality, update_normal_quality, \
+    update_conjured_quality
 
 
 class GildedRose(object):
@@ -21,12 +22,13 @@ class GildedRose(object):
                 update_backstage_passes_quality(item)
             elif item.name == "Sulfuras, Hand of Ragnaros":
                 pass
+            elif item.name == "Conjured":
+                update_conjured_quality(item)
             else:
                 update_normal_quality(item)
 
     def update_sellin(self, item):
         if item.name != "Sulfuras, Hand of Ragnaros":
-            # For all items (except Sulfuras), SellIn decreases by 1 each day
             item.sell_in = item.sell_in - 1
 
 

@@ -15,6 +15,9 @@ def update_brie_quality(item):
     if item.sell_in < 0:
         item.quality = item.quality + 1
 
+def update_conjured_quality(item):
+    item.quality = item.quality - 2
+
 def update_normal_quality(item):
     item.quality = item.quality - 1
 
