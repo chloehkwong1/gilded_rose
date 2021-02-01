@@ -10,12 +10,11 @@ class GildedRose(object):
     def main(self):
         for item in self.items:
             if 0 < item.quality < 50:
-                self.update_quality_before_sellin(item)
-
+                self.update_quality(item)
                 self.update_sellin(item)
 
 
-    def update_quality_before_sellin(self, item):
+    def update_quality(self, item):
             if item.name == "Aged Brie":
                 update_brie_quality(item)
             elif item.name == "Backstage passes to a TAFKAL80ETC concert":
