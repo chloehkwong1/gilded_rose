@@ -117,3 +117,9 @@ def test_conjured_quality_decreases_by_two_daily_before_sellin():
     gilded_rose = GildedRose(items)
     gilded_rose.main()
     assert items[0].quality == 8
+
+def test_conjured_quality_decreases_by_four_daily_after_sellin():
+    items = [Item("Conjured", -1, 10)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.main()
+    assert items[0].quality == 6
