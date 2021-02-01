@@ -52,7 +52,7 @@ class GildedRose(object):
                             self.decrease_quality(item)
                 else:
                     # For BP, item quality is zero after sellin date
-                    item.quality = item.quality - item.quality
+                    item.quality = 0
             else:
                 if item.quality < 50:
                     # For AB when quality is less than 50, quality increases by an extra 1 each day after sellin date
